@@ -1,0 +1,22 @@
+# Checks the marketplace on every push and pull request (node check.cjs: names, paths, the plugin's manifest, icon and connector address).
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check the catalogue and the plugin
+        run: node check.cjs
